@@ -1,19 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import "./Register.css";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onFinish = async (values, event) => {
-    console.log("Received values of form: ", values);
+    // console.log("Received values of form: ", values);
     // event.preventDefault();
 
-    const response = await fetch("http://localhost:8000/api/register", {
+    await fetch("http://localhost:8000/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +26,18 @@ const Register = () => {
         email: values.email,
         password: values.password1,
       }),
-    });
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        // console.log(data.status);
+        if (data.status !== "error") {
+          // console.log("hiiii");
+          navigate("/login");
+        } else {
+          console.log("ddd");
+          alert("Duplicated email");
+        }
+      });
   };
 
   return (

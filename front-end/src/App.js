@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
+import UserInfo from "./components/UserInfo/UserInfo";
 import './App.css';
 
 function App() {
@@ -14,13 +15,10 @@ function App() {
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
           <Route path="/dashboard" exact element={<Dashboard />} />
+          <Route path="/userinfo" exact element={<UserInfo />} />
         </Routes>
       </BrowserRouter>
     </div>
-    // <div className="appstyle">
-    //   {/* <Register /> */}
-    //   <Login />
-    // </div>
   );
 }
 

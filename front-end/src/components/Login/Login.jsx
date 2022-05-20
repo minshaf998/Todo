@@ -28,8 +28,12 @@ const Login = () => {
       .then((result) => result.json())
       .then((data) => {
         // console.log(data.user);
-        if (data.user) {
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          alert("Login successful");
           navigate("/dashboard");
+        } else {
+          alert("Please check you email and password");
         }
       });
   };
