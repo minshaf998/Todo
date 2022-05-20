@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd front-end && npm start"
-  },
+    "start": "concurrently \"cd front-end && npm start\" \"cd back-end && npm run dev\""
+    },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.2.0"
+  }
 }
