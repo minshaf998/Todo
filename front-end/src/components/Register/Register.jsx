@@ -13,10 +13,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   const onFinish = async (values, event) => {
-    // console.log("Received values of form: ", values);
     // event.preventDefault();
-
-    await fetch("http://localhost:8000/api/register", {
+    await fetch("http://localhost:8000/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,9 +27,7 @@ const Register = () => {
     })
       .then((result) => result.json())
       .then((data) => {
-        // console.log(data.status);
         if (data.status !== "error") {
-          // console.log("hiiii");
           navigate("/login");
         } else {
           console.log("ddd");
@@ -95,7 +91,8 @@ const Register = () => {
             placeholder="Password"
           />
         </Form.Item>
-        <Form.Item
+
+        {/* <Form.Item
           name="password2"
           rules={[
             {
@@ -109,7 +106,8 @@ const Register = () => {
             type="password"
             placeholder="Conform Password"
           />
-        </Form.Item>
+        </Form.Item> */}
+
         {/* <Form.Item>
         <Form.Item name="remember" valuePropName="checked" noStyle>
           <Checkbox>Remember me</Checkbox>
@@ -128,7 +126,7 @@ const Register = () => {
           >
             SignUp
           </Button>
-          Or <a href="login">Already have an account</a>
+          Or <a href="/login">Already have an account</a>
         </Form.Item>
       </Form>
     </div>

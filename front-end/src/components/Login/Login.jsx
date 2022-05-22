@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, Checkbox, Result } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
-import "./Login.css";
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,9 +11,7 @@ const Login = () => {
 
   const onFinish = async (values, event) => {
     // event.preventDefault();
-    // console.log(values, values.email, values.password1);
-
-    await fetch("http://localhost:8000/api/login", {
+    await fetch("http://localhost:8000/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +23,6 @@ const Login = () => {
     })
       .then((result) => result.json())
       .then((data) => {
-        // console.log(data.user);
         if (data.token) {
           localStorage.setItem("token", data.token);
           alert("Login successful");
@@ -77,7 +72,7 @@ const Login = () => {
             placeholder="Password"
           />
         </Form.Item>
-        <Form.Item>
+        {/* <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
@@ -85,7 +80,7 @@ const Login = () => {
           <a className="login-form-forgot" href="">
             Forgot password
           </a>
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item>
           <Button

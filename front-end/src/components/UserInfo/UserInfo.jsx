@@ -7,31 +7,28 @@ import "./UserInfo.css";
 function UserInfo(props) {
   const navigate = useNavigate();
 
-  async function goBack() {
-    await fetch("http://localhost:8000/api/userinfo", {
+  async function getData(email) {
+    // console.log(email);
+    await fetch("http://localhost:8000/api/auth/userinfo/email", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
     })
       .then((r) => r.json())
       .then((data) => {
-        console.log(data[0].name);
-        alert(data[0].name);
+        // console.log(data);
       });
   }
 
   useEffect(() => {
-    // console.log("from useEffect");
     const token = localStorage.getItem("token");
-    // console.log(token);
     if (token) {
       const user = jwt_decode(token);
-      // console.log(user);
       if (!user) {
-        localStorage.removeItem(token);
+        localStorage.removeItem("token");
         navigate("/login");
       } else {
-        goBack();
+        getData(user.email);
       }
     } else {
       navigate("/login");
