@@ -6,14 +6,14 @@ const jwt = require('jsonwebtoken')
 const User = require('./../models/user.model')
 
 router.post('/register', async (req, res) => {
-    console.log('hi');
     try {
         const newPassword = await bcrypt.hash(req.body.password, 10)
         await User.create({
-            name: req.body.name,
-            email: req.body.email,
+            // name: req.body.name,
+            // email: req.body.email,
+            // password: req.body.password
+            ...req.body,
             password: newPassword,
-            // ...req.body
         })
         res.json({ status: 'ok' })
     }
@@ -23,9 +23,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    const user = await User.findOne({
-        email: req.body.email,
-    })
+    const user = await User.findOne({ email: req.body.email, })
 
     if (!user) {
         return res.json({ status: 'error', user: false })

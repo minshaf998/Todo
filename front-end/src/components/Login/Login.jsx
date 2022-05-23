@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, Checkbox, Result } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import jwt_decode from "jwt-decode";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,6 +33,23 @@ const Login = () => {
         }
       });
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const user = jwt_decode(token);
+      if (!user) {
+        localStorage.removeItem("token");
+        // navigate("/login");
+      } else {
+        // getData();
+        alert("You are loged in");
+        navigate("/dashboard");
+      }
+    } else {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <div className="form_div">
