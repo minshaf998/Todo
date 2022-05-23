@@ -1,18 +1,21 @@
-# Getting Started with Create React App
+# Getting Started with Todo Application
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Clone the project
+### `git clone`
 
-### ``
+## Install the dependencies
+#### inside Todo directory
+### `npm install`
+#### inside front-end directory
+### `npm install`
+#### inside back-end directory
+### `npm install`
 
-### `npm start`
 
-### `npm start`
 
-### `npm start`
-
-In the project directory, you can run:
+## In the project(Todo) directory, you can run:
 
 ### `npm start`
 
