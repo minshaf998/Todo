@@ -43,9 +43,7 @@ const Register = () => {
       const user = jwt_decode(token);
       if (!user) {
         localStorage.removeItem("token");
-        // navigate("/login");
       } else {
-        // getData();
         alert("Log out first to create another account");
         navigate("/dashboard");
       }

@@ -9,9 +9,6 @@ router.post('/register', async (req, res) => {
     try {
         const newPassword = await bcrypt.hash(req.body.password, 10)
         await User.create({
-            // name: req.body.name,
-            // email: req.body.email,
-            // password: req.body.password
             ...req.body,
             password: newPassword,
         })
@@ -27,6 +24,7 @@ router.post('/login', async (req, res) => {
 
     if (!user) {
         return res.json({ status: 'error', user: false })
+        // res.send(404)
     }
 
     const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
@@ -47,7 +45,6 @@ router.get('/userinfo/:email', async (req, res) => {
     const email = req.params.email
 
     const user = await User.findOne({ email });
-    console.log(user);
 
     if (!user) {
         return res.sendStatus(404);

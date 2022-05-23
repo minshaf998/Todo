@@ -10,16 +10,15 @@ function Dashboard(props) {
   const navigate = useNavigate();
 
   async function getData() {
-    const token = localStorage.getItem("token");
-    await fetch("http://localhost:8000/api/todo", {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        // console.log(data);
+    try {
+      const data = await fetch("http://localhost:8000/api/todo", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
       });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {

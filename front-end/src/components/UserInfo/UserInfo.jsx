@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
@@ -6,18 +6,25 @@ import "./UserInfo.css";
 
 function UserInfo(props) {
   const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   async function getData(email) {
-    // console.log(email);
-    await fetch("http://localhost:8000/api/auth/userinfo/email", {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        // console.log(data);
-      });
+    try {
+      await fetch(`http://localhost:8000/api/auth/userinfo/${email}`, {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+        .then((result) => result.json())
+        .then((user) => {
+          // console.log(user.email, user.name);
+          setName(user.name);
+          setEmail(user.email);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -35,7 +42,7 @@ function UserInfo(props) {
     }
   }, []);
 
-  return <div>UserInfo</div>;
+  return <div>{(name, email)}</div>;
 }
 
 export default UserInfo;
