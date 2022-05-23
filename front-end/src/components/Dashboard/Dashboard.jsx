@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
@@ -8,17 +8,18 @@ import Input from "./Input";
 
 function Dashboard(props) {
   const navigate = useNavigate();
+  const [items, setItems] = useState([]);
 
-  async function getData() {
-    try {
-      const data = await fetch("http://localhost:8000/api/todo", {
-        headers: {
-          "x-access-token": localStorage.getItem("token"),
-        },
+  async function getData(email) {
+    await fetch(`http://localhost:8000/api/todo/complete/${email}`, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        setItems(data);
       });
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function Dashboard(props) {
         localStorage.removeItem("token");
         navigate("/login");
       } else {
-        getData();
+        getData(user.email);
       }
     } else {
       navigate("/login");
@@ -41,7 +42,6 @@ function Dashboard(props) {
   }
 
   function handleLogout() {
-    const token = localStorage.getItem("token");
     localStorage.removeItem("token");
     navigate("/login");
   }
@@ -52,33 +52,29 @@ function Dashboard(props) {
 
       <Input />
 
-      <div className="filters btn-group stack-exception">
+      {/* <div className="filters btn-group stack-exception">
         <button type="button" className="btn toggle-btn" aria-pressed="true">
-          <span className="visually-hidden">Show </span>
           <span>all</span>
-          <span className="visually-hidden"> tasks</span>
         </button>
         <button type="button" className="btn toggle-btn" aria-pressed="false">
           <span className="visually-hidden">Show </span>
           <span>Active</span>
-          <span className="visually-hidden"> tasks</span>
         </button>
         <button type="button" className="btn toggle-btn" aria-pressed="false">
           <span className="visually-hidden">Show </span>
           <span>Completed</span>
-          <span className="visually-hidden"> tasks</span>
         </button>
-      </div>
+      </div> */}
 
-      <h2 id="list-heading">3 tasks remaining</h2>
+      <h2 id="list-heading">{items.length} tasks remaining</h2>
 
-      <ul
+      <span
         role="list"
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading"
       >
         <Task />
-      </ul>
+      </span>
       <hr className="hr" />
       <button
         type="button"

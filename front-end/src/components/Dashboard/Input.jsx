@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 function Input() {
   const navigate = useNavigate();
+  const [note, setNote] = useState("");
+  const [isCompleted] = useState(false);
 
   function getEmail() {
     const token = localStorage.getItem("token");
@@ -22,14 +24,15 @@ function Input() {
   }
   const handleClick = async (values, event) => {
     const email = getEmail();
-    await fetch("http://localhost:8000/api/todo", {
-      method: "PUT",
+    await fetch("http://localhost:8000/api/todo/", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        note: "note from client",
-        email: email,
+        note: note,
+        userid: email,
+        isCompleted: isCompleted,
       }),
     })
       .then((r) => r.json())
@@ -52,6 +55,7 @@ function Input() {
           className="input input__lg"
           name="text"
           autoComplete="off"
+          onChange={(e) => setNote(e.target.value)}
         />
         <button
           type="submit"

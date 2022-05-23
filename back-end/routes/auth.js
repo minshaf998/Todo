@@ -43,11 +43,9 @@ router.post('/login', async (req, res) => {
 
 router.get('/userinfo/:email', async (req, res) => {
     const email = req.params.email
-
     const user = await User.findOne({ email });
-
     if (!user) {
-        return res.sendStatus(404);
+        return res.status(404);
     }
     else {
         res.send(user)

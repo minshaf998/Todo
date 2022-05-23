@@ -1,0 +1,10 @@
+.site-card-border-less-wrapper {
+    padding: 30px;
+    background: #ececec;
+  }
+
+.info_div {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+  }

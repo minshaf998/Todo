@@ -1,54 +1,79 @@
 const express = require('express')
 const router = express.Router()
 
-const User = require('./../models/user.model')
+const Todo = require('./../models/todo.model')
 
-router.get('/', async (req, res) => {
-    const email = req.body.email
-    const note = req.body.note
+
+router.post('/', async (req, res) => {
+    console.log('hi todo');
     try {
-        await User.findOneAndUpdate({ email: email }, { note: note })
+        await Todo.create({
+            ...req.body
+        })
+        res.json({ status: 'ok' })
     }
-    catch (error) {
-        res.json({ status: 'error', error: 'invalid token' })
+    catch (err) {
+        console.log("err", err);
+        res.json({ status: 'error', error: 'todo cannot created' })
     }
 })
 
-router.get('/:id', async (req, res) => {
-    const email = req.body.email
-    const note = req.body.note
+router.get('/:email', async (req, res) => {
+    const emails = req.params.email
     try {
-        await User.findOneAndUpdate({ email: email }, { note: note })
+        const note = await Todo.find({ userid: emails }).sort({ createdAt: 1 });
+        return res.status(201).send(note);
     }
     catch (error) {
-        res.json({ status: 'error', error: 'invalid token' })
+        res.json({ status: 'error', error: 'cannot found' })
+    }
+})
+
+
+router.get('/complete/:email', async (req, res) => {
+    const emails = req.params.email
+    try {
+        const note = await Todo.find({ userid: emails, isCompleted: false });
+        return res.status(201).send(note);
+    }
+    catch (error) {
+        res.json({ status: 'error', error: 'cannot found' })
+    }
+})
+
+//able to highlight todays tasks
+router.post('/date/:email', async (req, res) => {
+    const email = req.params.email
+    const date = req.body.date
+    try {
+        const todo = await Todo.find({ userid: email, createdAt: { $gt: "2022-05-23", $lte: "2022-05-24" } })
+        return res.status(201).send(todo);
+    }
+    catch (error) {
+        res.json({ status: 'error', error: 'cannot sort todo' })
     }
 })
 
 router.delete('/:id', async (req, res) => {
-    const email = req.body.email
+    const id = req.params.id
     try {
-        await User.findOneAndDelete({ email: email }, { note: note })
+        const todo = await Todo.findOneAndDelete({ _id: id })
+        res.send('successfully deleted')
     }
     catch (error) {
-        res.json({ status: 'error', error: 'invalid token' })
+        res.json({ status: 'error', error: 'cannot delete todo' })
     }
 })
 
-router.put('/', async (req, res) => {
-    const email = req.body.email
-    const note = req.body.note
-    // console.log(email, note);
+router.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    const update = req.body;
     try {
-        const updatedUser = await Uesr.findOneAndUpdate({ email: email }, {
-            $push: {
-                notes: { note: note }
-            }
-        });
-        res.send(updatedUser)
+        const updatedTodo = await Todo.findOneAndUpdate({ _id: id }, update, { new: true });
+        res.status(201).send(updatedTodo)
     }
     catch (error) {
-        res.json({ status: 'error', error: 'invalid token' })
+        res.json({ status: 'error', error: 'cannot update todo' })
     }
 })
 

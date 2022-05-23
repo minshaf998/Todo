@@ -1,5 +1,3 @@
-// const { array, object } = require('joi');
-const { mongo } = require('mongoose')
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
@@ -10,6 +8,6 @@ const userSchema = new mongoose.Schema({
     { timestamps: true }
 )
 
-const model = mongoose.model('UserDataInshaf', userSchema)
+const model = mongoose.model('user', userSchema)
 
 module.exports = model

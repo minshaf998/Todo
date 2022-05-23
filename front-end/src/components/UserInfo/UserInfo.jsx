@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { Card } from "antd";
 
 import "./UserInfo.css";
 
@@ -42,7 +43,22 @@ function UserInfo(props) {
     }
   }, []);
 
-  return <div>{(name, email)}</div>;
+  return (
+    <div>
+      <div className="site-card-border-less-wrapper info_div">
+        <Card
+          // title="Card title"
+          bordered={false}
+          style={{
+            width: 500,
+          }}
+        >
+          <h2>Name : {name}</h2>
+          <h2>Email : {email}</h2>
+        </Card>
+      </div>
+    </div>
+  );
 }
 
 export default UserInfo;
