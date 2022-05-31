@@ -1,11 +1,15 @@
 const express = require('express')
 const router = express.Router()
+const Joi = require('joi')
 
 const Todo = require('./../models/todo.model')
-
+const todoSchema = require('./../validation/todoValidator')
 
 router.post('/', async (req, res) => {
-    console.log('hi todo');
+
+    const result = todoSchema.validate(req.body)
+    if (result.error) return res.send(result.error.details[0].message)
+
     try {
         await Todo.create({
             ...req.body
