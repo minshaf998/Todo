@@ -6,7 +6,6 @@ function Input() {
   const navigate = useNavigate();
   const [note, setNote] = useState("");
   const [isCompleted] = useState(false);
-
   function getEmail() {
     const token = localStorage.getItem("token");
 

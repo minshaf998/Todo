@@ -48,9 +48,9 @@ router.get('/complete/:email', async (req, res) => {
 //able to highlight todays tasks
 router.post('/date/:email', async (req, res) => {
     const email = req.params.email
-    const date = req.body.date
+    // const date = req.body.date
     try {
-        const todo = await Todo.find({ userid: email, createdAt: { $gt: "2022-05-23", $lte: "2022-05-24" } })
+        const todo = await Todo.find({ userid: email, createdAt: { $gt: "2022-05-31", $lte: "2022-06-01" } })
         return res.status(201).send(todo);
     }
     catch (error) {

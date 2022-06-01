@@ -6,16 +6,19 @@ const jwt = require('jsonwebtoken')
 const User = require('./../models/user.model')
 
 router.post('/register', async (req, res) => {
+    const user1 = await User.findOne({ email: req.body.email })
+    if (user1) return res.status(400).send('user exists')
+
     try {
         const newPassword = await bcrypt.hash(req.body.password, 10)
-        await User.create({
+        const user = await User.create({
             ...req.body,
             password: newPassword,
         })
-        res.json({ status: 'ok' })
+        res.status(200).json(user)
     }
     catch (err) {
-        res.json({ status: 'error', error: 'Duplicate email' })
+        res.json({ status: 'error', error: "cannot created" })
     }
 })
 
@@ -24,7 +27,6 @@ router.post('/login', async (req, res) => {
 
     if (!user) {
         return res.json({ status: 'error', user: false })
-        // res.send(404)
     }
 
     const isPasswordValid = await bcrypt.compare(req.body.password, user.password)

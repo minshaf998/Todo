@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { Modal, Card } from "antd";
 
-function Task() {
-  const [value, setItems] = useState([]);
+function Task({ fromNote, id, email }) {
+  console.log(fromNote, id, email);
+  // const [value, setItems] = useState([]);
   const [note, setNote] = useState("");
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -17,14 +18,15 @@ function Task() {
     })
       .then((r) => r.json())
       .then((data) => {
-        setItems(data);
+        // setItems(data);
       });
   }
 
   const deleteTodo = async (id) => {
     await fetch(`http://localhost:8000/api/todo/${id}`, {
       method: "DELETE",
-    }).then(() => window.location.reload());
+    });
+    // .then(() => window.location.reload());
   };
 
   const showEditModal = () => {
@@ -78,62 +80,62 @@ function Task() {
       navigate("/login");
     }
   }, []);
+
   return (
     <div>
       <li className="todo stack-small">
         <div>
-          {value.map((item) => (
-            <div>
-              <Card style={{ fontSize: 20 }}>{item.note}</Card>
-              <div className="btn-group">
-                <button type="button" className="btn" onClick={showEditModal}>
-                  Edit
-                </button>
-                <Modal
-                  visible={isModalVisible}
-                  footer={null}
-                  onCancel={handleCancel}
-                >
-                  <form>
-                    <h2 className="label-wrapper">
-                      <label htmlFor="new-todo-input" className="label__lg">
-                        What needs to be update?
-                      </label>
-                    </h2>
-                    <input
-                      type="text"
-                      id="new-todo-input"
-                      className="input input__lg"
-                      name="text"
-                      autoComplete="off"
-                      onChange={(e) => setNote(e.target.value)}
-                    />
-                    <button
-                      type="submit"
-                      className="btn btn__primary btn__lg"
-                      onClick={() => {
-                        handleClick(item._id);
-                      }}
-                    >
-                      Update
-                    </button>
-                  </form>
-                </Modal>
-                <button
-                  type="button"
-                  className="btn btn__danger"
-                  onClick={() => {
-                    const confirmBox = window.confirm(
-                      "Do you really want to delete" + item.note
-                    );
-                    if (confirmBox === true) {
-                      deleteTodo(item._id);
-                    }
-                  }}
-                >
-                  Delete
-                </button>
-                {/* <div className="c-cb">
+          <div>
+            <Card style={{ fontSize: 20 }}>{fromNote}</Card>
+            <div className="btn-group">
+              <button type="button" className="btn" onClick={showEditModal}>
+                Edit
+              </button>
+              <Modal
+                visible={isModalVisible}
+                footer={null}
+                onCancel={handleCancel}
+              >
+                <form>
+                  <h2 className="label-wrapper">
+                    <label htmlFor="new-todo-input" className="label__lg">
+                      What needs to be update?
+                    </label>
+                  </h2>
+                  <input
+                    type="text"
+                    id="new-todo-input"
+                    className="input input__lg"
+                    name="text"
+                    autoComplete="off"
+                    onChange={(e) => setNote(e.target.value)}
+                  />
+                  <button
+                    type="submit"
+                    className="btn btn__primary btn__lg"
+                    onClick={() => {
+                      handleClick(id);
+                    }}
+                  >
+                    Update
+                  </button>
+                </form>
+              </Modal>
+              <button
+                type="button"
+                className="btn btn__danger"
+                onClick={() => {
+                  const confirmBox = window.confirm(
+                    "Do you really want to delete" + fromNote
+                  );
+                  if (confirmBox === true) {
+                    deleteTodo(id);
+                  }
+                }}
+              >
+                Delete
+              </button>
+              {/* <div className="c-cb">
                   <input
                     id="todo-0"
                     type="checkbox"
@@ -148,10 +150,9 @@ function Task() {
                     Completed
                   </label>
                 </div> */}
-              </div>
-              <br />
             </div>
-          ))}
+            <br />
+          </div>
         </div>
       </li>
     </div>

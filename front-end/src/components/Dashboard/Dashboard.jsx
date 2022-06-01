@@ -9,6 +9,7 @@ import Input from "./Input";
 function Dashboard(props) {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
+  const [email, setEmail] = useState("");
 
   async function getData(email) {
     await fetch(`http://localhost:8000/api/todo/complete/${email}`, {
@@ -30,6 +31,7 @@ function Dashboard(props) {
         localStorage.removeItem("token");
         navigate("/login");
       } else {
+        setEmail(user.email);
         getData(user.email);
       }
     } else {
@@ -49,7 +51,12 @@ function Dashboard(props) {
   return (
     <div className="todoapp stack-large">
       <h1>Todo</h1>
-
+      {/* <Input items={items["0"].} /> */}
+      {/* {console.log(items)} */}
+      {/* {items.map((item) => console.log("item1 ins ", item._id))} */}
+      {/* {items.map((item) => (
+        <Input key={item._id} note={item.note} id={item._id} />
+      ))} */}
       <Input />
 
       {/* <div className="filters btn-group stack-exception">
@@ -73,7 +80,15 @@ function Dashboard(props) {
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading"
       >
-        <Task />
+        {/* <Task /> */}
+        {items.map((item) => (
+          <Task
+            key={item._id}
+            fromNote={item.note}
+            id={item._id}
+            email={email}
+          />
+        ))}
       </span>
       <hr className="hr" />
       <button
