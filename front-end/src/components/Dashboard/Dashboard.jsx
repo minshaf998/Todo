@@ -6,7 +6,7 @@ import "./Dashboard.css";
 import Task from "./Task";
 import Input from "./Input";
 
-function Dashboard(props) {
+function Dashboard() {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ function Dashboard(props) {
         "x-access-token": localStorage.getItem("token"),
       },
     })
-      .then((r) => r.json())
+      .then((response) => response.json())
       .then((data) => {
         setItems(data);
       });
@@ -51,12 +51,6 @@ function Dashboard(props) {
   return (
     <div className="todoapp stack-large">
       <h1>Todo</h1>
-      {/* <Input items={items["0"].} /> */}
-      {/* {console.log(items)} */}
-      {/* {items.map((item) => console.log("item1 ins ", item._id))} */}
-      {/* {items.map((item) => (
-        <Input key={item._id} note={item.note} id={item._id} />
-      ))} */}
       <Input />
 
       {/* <div className="filters btn-group stack-exception">
@@ -80,7 +74,6 @@ function Dashboard(props) {
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading"
       >
-        {/* <Task /> */}
         {items.map((item) => (
           <Task
             key={item._id}

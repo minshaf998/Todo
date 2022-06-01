@@ -1,32 +1,14 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import jwt_decode from "jwt-decode";
 import { Modal, Card } from "antd";
 
 function Task({ fromNote, id, email }) {
-  // console.log(fromNote, id, email);
-  // const [value, setItems] = useState([]);
   const [note, setNote] = useState("");
-  // const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  // async function getData(email) {
-  //   await fetch(`http://localhost:8000/api/todo/${email}`, {
-  //     headers: {
-  //       "x-access-token": localStorage.getItem("token"),
-  //     },
-  //   })
-  //     .then((r) => r.json())
-  //     .then((data) => {
-  //       // setItems(data);
-  //     });
-  // }
 
   const deleteTodo = async (id) => {
     await fetch(`http://localhost:8000/api/todo/${id}`, {
       method: "DELETE",
     });
-    // .then(() => window.location.reload());
   };
 
   const showEditModal = () => {
@@ -49,37 +31,6 @@ function Task({ fromNote, id, email }) {
       .then((r) => r.json())
       .then((data) => {});
   };
-
-  // const handleClickCompleted = (id) => {
-  //   fetch(`http://localhost:8000/api/todo/${id}`, {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       iscompleted: iscompleted,
-  //     }),
-  //   })
-  //     .then((r) => r.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     const user = jwt_decode(token);
-  //     if (!user) {
-  //       localStorage.removeItem("token");
-  //       navigate("/login");
-  //     } else {
-  //       getData(user.email);
-  //     }
-  //   } else {
-  //     navigate("/login");
-  //   }
-  // }, []);
 
   return (
     <div>

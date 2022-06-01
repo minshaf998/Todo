@@ -19,7 +19,6 @@ function UserInfo(props) {
       })
         .then((result) => result.json())
         .then((user) => {
-          // console.log(user.email, user.name);
           setName(user.name);
           setEmail(user.email);
         });
