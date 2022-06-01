@@ -37,7 +37,7 @@ function Dashboard(props) {
     } else {
       navigate("/login");
     }
-  }, []);
+  }, [items]);
 
   function handleProfile() {
     navigate("/userinfo");

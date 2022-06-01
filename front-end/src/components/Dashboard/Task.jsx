@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import jwt_decode from "jwt-decode";
 import { Modal, Card } from "antd";
 
 function Task({ fromNote, id, email }) {
-  console.log(fromNote, id, email);
+  // console.log(fromNote, id, email);
   // const [value, setItems] = useState([]);
   const [note, setNote] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  async function getData(email) {
-    await fetch(`http://localhost:8000/api/todo/${email}`, {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        // setItems(data);
-      });
-  }
+  // async function getData(email) {
+  //   await fetch(`http://localhost:8000/api/todo/${email}`, {
+  //     headers: {
+  //       "x-access-token": localStorage.getItem("token"),
+  //     },
+  //   })
+  //     .then((r) => r.json())
+  //     .then((data) => {
+  //       // setItems(data);
+  //     });
+  // }
 
   const deleteTodo = async (id) => {
     await fetch(`http://localhost:8000/api/todo/${id}`, {
@@ -66,20 +66,20 @@ function Task({ fromNote, id, email }) {
   //     });
   // };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const user = jwt_decode(token);
-      if (!user) {
-        localStorage.removeItem("token");
-        navigate("/login");
-      } else {
-        getData(user.email);
-      }
-    } else {
-      navigate("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     const user = jwt_decode(token);
+  //     if (!user) {
+  //       localStorage.removeItem("token");
+  //       navigate("/login");
+  //     } else {
+  //       getData(user.email);
+  //     }
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   return (
     <div>
