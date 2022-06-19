@@ -3,17 +3,22 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Clone the project
+
 ### `git clone`
 
 ## Install the dependencies
+
 #### inside Todo directory
+
 ### `npm install`
+
 #### inside front-end directory
+
 ### `npm install`
+
 #### inside back-end directory
+
 ### `npm install`
-
-
 
 ## In the project(Todo) directory, you can run:
 

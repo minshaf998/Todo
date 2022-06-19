@@ -1,9 +1,9 @@
-const Joi = require('joi')
+const Joi = require("joi");
 
 const todoSchema = Joi.object({
-    note: Joi.string().min(1).max(15),
-    userid: Joi.string().email(),
-    isCompleted: Joi.boolean()
-})
+  note: Joi.string().min(1).max(15),
+  userid: Joi.string().email(),
+  isCompleted: Joi.boolean(),
+});
 
-module.exports = todoSchema
+module.exports = todoSchema;
