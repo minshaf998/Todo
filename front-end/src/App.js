@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
-import Dashboard from "./components/Dashboard/Dashboard";
-import UserInfo from "./components/UserInfo/UserInfo";
+import Register from "./Register/Register";
+import Login from "./Login/Login";
+import Dashboard from "./Dashboard/Dashboard";
+import UserInfo from "./UserInfo/UserInfo";
 import "./App.css";
 
 function App() {
